@@ -2,9 +2,12 @@
 
 ## Refers
 
+* [pymodbus Source Code](http://pydoc.net/pymodbus/1.2.0/pymodbus/)
 * [client.common — Twisted Async Modbus Client](http://pymodbus.readthedocs.io/en/latest/library/client-common.html)
 * [store — Datastore for Modbus Server Context](http://pymodbus.readthedocs.io/en/latest/library/datastore/store.html)
 * [pymodbus 試寫 Modbus TCP 程式](http://pymapi.blogspot.jp/2013/11/pymodbus-modbus-tcp.html)
+* [Modbus TCP流量分析](http://www.freebuf.com/articles/web/88944.html)
+* [Pymodbus Library Examples](http://pymodbus.readthedocs.io/en/latest/examples/index.html)
 
 ## Install Plugin
 
