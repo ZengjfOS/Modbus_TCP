@@ -56,28 +56,63 @@ def exampleRequests(client):
 # deferred assert helper(dassert).
 #---------------------------------------------------------------------------# 
 def beginAsynchronousTest(client):
+    # write_coil(address, value, **kwargs)
+    #     address – The starting address to write to
+    #     value – The value to write to the specified address
     rq = client.write_coil(1, True)
+
+    # read_coils(address, count=1, **kwargs)
+    #     address – The starting address to read from
+    #     count – The number of coils to read
     rr = client.read_coils(1,1)
+
     dassert(rq, lambda r: r.function_code < 0x80)     # test that we are not an error
     dassert(rr, lambda r: r.bits[0] == True)          # test the expected value
     
+    # write_coils(address, values, **kwargs)
+    #     address – The starting address to write to
+    #     values – The values to write to the specified address
     rq = client.write_coils(1, [True]*8)
+
+    # read_coils(address, count=1, **kwargs)
+    # address – The starting address to read from
+    # count – The number of coils to read
     rr = client.read_coils(1,8)
+
     dassert(rq, lambda r: r.function_code < 0x80)     # test that we are not an error
     dassert(rr, lambda r: r.bits == [True]*8)         # test the expected value
     
     rq = client.write_coils(1, [False]*8)
+
+    # read_discrete_inputs(address, count=1, **kwargs)
+    # address – The starting address to read from
+    # count – The number of discretes to read
     rr = client.read_discrete_inputs(1,8)
     dassert(rq, lambda r: r.function_code < 0x80)     # test that we are not an error
     dassert(rr, lambda r: r.bits == [True]*8)         # test the expected value
     
+    # write_register(address, value, **kwargs)
+    # address – The starting address to write to
+    # value – The value to write to the specified address
     rq = client.write_register(1, 10)
+
+    # read_holding_registers(address, count=1, **kwargs)
+    # address – The starting address to read from
+    # count – The number of registers to read
     rr = client.read_holding_registers(1,1)
     dassert(rq, lambda r: r.function_code < 0x80)     # test that we are not an error
     dassert(rr, lambda r: r.registers[0] == 10)       # test the expected value
     
+    # write_registers(address, values, **kwargs)
+    # address – The starting address to write to
+    # values – The values to write to the specified address
     rq = client.write_registers(1, [10]*8)
+
+    # read_input_registers(address, count=1, **kwargs)
+    # address – The starting address to read from
+    # count – The number of registers to read
     rr = client.read_input_registers(1,8)
+
     dassert(rq, lambda r: r.function_code < 0x80)     # test that we are not an error
     dassert(rr, lambda r: r.registers == [17]*8)      # test the expected value
     
@@ -87,6 +122,11 @@ def beginAsynchronousTest(client):
         'write_address':   1,
         'write_registers': [20]*8,
     }
+    # readwrite_registers(*args, **kwargs)
+    # read_address – The address to start reading from
+    # read_count – The number of registers to read from address
+    # write_address – The address to start writing to
+    # write_registers – The registers to write to the specified address
     rq = client.readwrite_registers(**arguments)
     rr = client.read_input_registers(1,8)
     dassert(rq, lambda r: r.registers == [20]*8)      # test the expected value
@@ -121,7 +161,9 @@ def beginAsynchronousTest(client):
 # you can use an existing device, the reference implementation in the tools
 # directory, or start a pymodbus server.
 #---------------------------------------------------------------------------# 
+# 固定用法，生成ModbusClientProtocol协议Client端
 defer = protocol.ClientCreator(reactor, ModbusClientProtocol
         ).connectTCP("localhost", 5020)
+# 异步回调函数
 defer.addCallback(beginAsynchronousTest)
 reactor.run()

@@ -80,11 +80,25 @@ log.setLevel(logging.DEBUG)
 #
 #     store = ModbusSlaveContext(..., zero_mode=True)
 #---------------------------------------------------------------------------# 
+# This creates a modbus data model with each data access stored in its own personal block
+# Initializes the datastores, defaults to fully populated sequential data blocks if none are passed in.
+# Parameters:	kwargs –
+# Each element is a ModbusDataBlock
+# 
+# ‘di’ - Discrete Inputs initializer ‘co’ - Coils initializer ‘hr’ - Holding Register initializer ‘ir’ - Input Registers iniatializer
+# di --> 离散输入初始化器
+# co --> 线圈初始化器
+# hr --> 持有寄存器初始化器
+# ir --> 输入寄存器初始化器
 store = ModbusSlaveContext(
+    # 创建一个顺序的modbus数据存储:
+    #   address – The starting address of the datastore
+    #   values – Either a list or a dictionary of values
     di = ModbusSequentialDataBlock(0, [17]*100),
     co = ModbusSequentialDataBlock(0, [17]*100),
     hr = ModbusSequentialDataBlock(0, [17]*100),
     ir = ModbusSequentialDataBlock(0, [17]*100))
+# This represents a master collection of slave contexts. If single is set to true, it will be treated as a single context so every unit-id returns the same context. If single is set to false, it will be interpreted as a collection of slave contexts.
 context = ModbusServerContext(slaves=store, single=True)
 
 #---------------------------------------------------------------------------# 
