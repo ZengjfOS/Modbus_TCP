@@ -32,7 +32,15 @@ log.setLevel(logging.DEBUG)
 def dassert(deferred, callback):
     def _assertor(value):
         assert(value)
-    deferred.addCallback(lambda r: _assertor(callback(r)))
+
+    def _print_assertor(response):
+
+        print(response)
+        print(callback(response))
+
+        assert(callback(response))
+
+    deferred.addCallback(_print_assertor)
     deferred.addErrback(lambda  _: _assertor(False))
 
 #---------------------------------------------------------------------------# 
@@ -69,6 +77,7 @@ def beginAsynchronousTest(client):
     dassert(rq, lambda r: r.function_code < 0x80)     # test that we are not an error
     dassert(rr, lambda r: r.bits[0] == True)          # test the expected value
     
+    '''
     # write_coils(address, values, **kwargs)
     #     address – The starting address to write to
     #     values – The values to write to the specified address
@@ -131,6 +140,7 @@ def beginAsynchronousTest(client):
     rr = client.read_input_registers(1,8)
     dassert(rq, lambda r: r.registers == [20]*8)      # test the expected value
     dassert(rr, lambda r: r.registers == [17]*8)      # test the expected value
+    '''
 
     #-----------------------------------------------------------------------# 
     # close the client at some time later

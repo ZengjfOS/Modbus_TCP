@@ -1,5 +1,7 @@
 # Ubuntu Modbus TCP
 
+* `Master`是`Client`，`Slave`是`Server`。
+
 ## Refers
 
 * [pymodbus Source Code](http://pydoc.net/pymodbus/1.2.0/pymodbus/)
@@ -18,8 +20,8 @@ sudo apt-get install python3-twisted
 
 ## Code
 
-* [code/asynchronous-client.py](code/asynchronous-client.py)
-* [code/asynchronous-server.py](code/asynchronous-server.py)
+* [code/TCP/asynchronous-client.py](code/TCP/asynchronous-client.py)
+* [code/TCP/asynchronous-server.py](code/TCP/asynchronous-server.py)
 
 ## Server Output
 
@@ -132,5 +134,36 @@ root@localhost:/home/zengjf/Modbus_TCP/docs/code#
 
 ## Analysis
 
+### WireShark 
+
+* 获取TCP包：  
+  ![img/WireShark_Capture_Modbus_Data.png](img/WireShark_Capture_Modbus_Data.png)
+* 设置端口号：  
+  ![img/WireShark_Support_ModBus_Protocol.png](img/WireShark_Support_ModBus_Protocol.png)
+* 分析数据：  
+  ![img/WireShark_Modbus_Data_Analysis.png](img/WireShark_Modbus_Data_Analysis.png)
+* 数据解析：
+  * `00 01 00 00 00 06 00 05 00 01 ff 00`
+    * Transaction Identifier: 1 (00 01)
+    * Protocol Identifier: 0 (00 00)
+    * Length: 6 (00 06)
+    * Unit Identifier: 0 (00)
+    * .000 0101 = Function Code: Write Single Coil (5) (05)
+    * Reference Number: 1 (00 01)
+    * Data: ff00 (ff 00)
+      * Data: 0xff (ff)
+      * Padding: 0x00 (00)
+  * `00 02 00 00 00 04 00 01 01 01`
+    * Transaction Identifier: 2 (00 02)
+    * Protocol Identifier: 0 (00 00)
+    * Length: 4 (00 04)
+    * Unit Identifier: 0 (00)
+    * .000 0001 = Function Code: Read Coil (1) (01)
+    * Byte Count: 1 (01)
+    * Data: 01 (01)
+
+### 代码疑惑
+
 * `def beginAsynchronousTest(client):`中的client是什么：  
-  <pymodbus.client.async.ModbusClientProtocol object at 0x7f2bfb8ca910>
+  `<pymodbus.client.async.ModbusClientProtocol object at 0x7f2bfb8ca910>`
+
