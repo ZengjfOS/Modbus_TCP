@@ -14,7 +14,7 @@
 ## Install Plugin
 
 ```
-sudo apt-get install python-pymodbus
+sudo apt-get install python3-pymodbus
 sudo apt-get install python3-twisted
 ```
 
@@ -144,23 +144,23 @@ root@localhost:/home/zengjf/Modbus_TCP/docs/code#
   ![img/WireShark_Modbus_Data_Analysis.png](img/WireShark_Modbus_Data_Analysis.png)
 * 数据解析：
   * `00 01 00 00 00 06 00 05 00 01 ff 00`
-    * Transaction Identifier: 1 (00 01)
-    * Protocol Identifier: 0 (00 00)
-    * Length: 6 (00 06)
-    * Unit Identifier: 0 (00)
-    * .000 0101 = Function Code: Write Single Coil (5) (05)
-    * Reference Number: 1 (00 01)
-    * Data: ff00 (ff 00)
-      * Data: 0xff (ff)
-      * Padding: 0x00 (00)
+    * Transaction Identifier: `1` (00 01)
+    * Protocol Identifier: `0` (00 00)
+    * Length: `6` (00 06)
+    * Unit Identifier: `0` (00)
+    * .000 0101 = Function Code: Write Single Coil (`5`) (05)
+    * Reference Number: `1` (00 01)
+    * Data: `ff00` (ff 00)
+      * Data: `0xff` (ff)
+      * Padding: `0x00` (00)
   * `00 02 00 00 00 04 00 01 01 01`
-    * Transaction Identifier: 2 (00 02)
-    * Protocol Identifier: 0 (00 00)
-    * Length: 4 (00 04)
-    * Unit Identifier: 0 (00)
-    * .000 0001 = Function Code: Read Coil (1) (01)
-    * Byte Count: 1 (01)
-    * Data: 01 (01)
+    * Transaction Identifier: `2` (00 02)
+    * Protocol Identifier: `0` (00 00)
+    * Length: `4` (00 04)
+    * Unit Identifier: `0` (00)
+    * .000 0001 = Function Code: Read Coil (`1`) (01)
+    * Byte Count: `1` (01)
+    * Data: `01` (01)
 
 ### 代码疑惑
 
