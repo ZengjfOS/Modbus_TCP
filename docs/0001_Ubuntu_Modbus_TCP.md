@@ -161,6 +161,10 @@ root@localhost:/home/zengjf/Modbus_TCP/docs/code#
     * .000 0001 = Function Code: Read Coil (`1`) (01)
     * Byte Count: `1` (01)
     * Data: `01` (01)
+* Transaction Identifier  
+  The transaction identifier is used to associate the future response with the request. So, at a time, on a TCP connection, this identifier must be unique. There are several manners to use the transaction identifier:
+  * For example, it can be used as a simple "TCP sequence number" with a counter which is incremented at each request.
+  * It can also be judiciously used as a smart index or pointer to identify a transaction context in order to memorize the current remote server and the pending MODBUS request. 
 
 ### 代码疑惑
 
