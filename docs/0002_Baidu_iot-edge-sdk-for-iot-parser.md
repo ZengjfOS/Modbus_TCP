@@ -19,7 +19,7 @@
 * [Python Source Code](code/iot-edge-sdk-for-iot-parser/asynchronous-server.py)
 * 可能会遇到policyCache.txt文件的问题，需要点击gateway Web界面上的配置下发就行了；  
   * 下发配置中，只有解析项目才会真正有效；
-  * policyCache.txt：
+  * policyCache.txt：  
     ```
     [
         {
@@ -45,12 +45,19 @@
         }
     ]
     ```
-  * iot-edge-sdk-for-iot-parser输出信息(终端下按d打开debug模式)：
+  * iot-edge-sdk-for-iot-parser输出信息(终端下按d打开debug模式)：  
     ```
     received gateway config from cloud
     Wed Dec 20 22:00:53 2017
      enter loadSlavePolicy
     ```
+
+## Modbus Raw Data Test
+
+* Modbus Poll  
+  ![img/Modbus_Poll_Raw_Data.png](img/Modbus_Poll_Raw_Data.png)
+* Parser Mobus Raw Data Verify  
+  ![img/Baidu_IoT_Parser_Modbus_Verify.png](img/Baidu_IoT_Parser_Modbus_Verify.png)
 
 ## Install iot-edge-sdk-for-iot-parser Output Message
 
