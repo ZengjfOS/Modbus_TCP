@@ -2,7 +2,55 @@
 
 ## 参考文档
 
-[管理网关设备](https://cloud.baidu.com/doc/Parser/GUIGettingStarted.html#.E6.96.B0.E5.BB.BA.E7.BD.91.E5.85.B3)
+* [管理网关设备](https://cloud.baidu.com/doc/Parser/GUIGettingStarted.html#.E6.96.B0.E5.BB.BA.E7.BD.91.E5.85.B3)
+* [解析项目](https://cloud.baidu.com/doc/Parser/GUIGettingStarted.html#.E8.A7.A3.E6.9E.90.E9.A1.B9.E7.9B.AE)
+
+## Baidu Parser
+
+* 创建`iot-edge-sdk-for-iot-parser` key：  
+  ![img/Baidu_IoT_Parser_modbus_key.png](img/Baidu_IoT_Parser_modbus_key.png)
+* 创建网关：
+  ![img/Baidu_IoT_Parser_modbus_gateway.png](img/Baidu_IoT_Parser_modbus_gateway.png)
+* 运行`bdModbusGateway`：
+  * 创建`gwconfig.txt`文件；
+  * 将网关设备JSON密钥放入里面；
+  * 加载`gwconfig.txt`文件成功提示信息：`successfully loaded gateway config from file gwconfig.txt`；
+  ![img/Baidu_IoT_Parser_iot_edge-sdk-for-iot-parser.png](img/Baidu_IoT_Parser_iot_edge-sdk-for-iot-parser.png)
+* [Python Source Code](code/iot-edge-sdk-for-iot-parser/asynchronous-server.py)
+* 可能会遇到policyCache.txt文件的问题，需要点击gateway Web界面上的配置下发就行了；  
+  * 下发配置中，只有解析项目才会真正有效；
+  * policyCache.txt：
+    ```
+    [
+        {
+            "gatewayId":"5f69af20-79b3-44bf-84ba-3348a0155bf3",
+            "trantable":"15c3f8b0-d634-4da0-bfca-2318cbeacd17",
+            "functioncode":1,
+            "slaveId":5,
+            "pubChannel":{
+                "endpoint":"tcp://parser_endpoint1513157537065.mqtt.iot.gz.baidubce.com:1883",
+                "topic":"mb_dataTopic_v31513581732818",
+                "user":"parser_endpoint1513157537065/mb_thing_v21513157537065",
+                "password":"cLTFcng6DHjJf+DePzVAV41qKsLDtCmdz8o9Z4looTE="
+            },
+            "ip_com_addr":"23.106.155.16:5020",
+            "databits":8,
+            "stopbits":1,
+            "interval":3,
+            "mode":0,
+            "length":8,
+            "start_addr":1,
+            "parity":"N",
+            "baud":300
+        }
+    ]
+    ```
+  * iot-edge-sdk-for-iot-parser输出信息(终端下按d打开debug模式)：
+    ```
+    received gateway config from cloud
+    Wed Dec 20 22:00:53 2017
+     enter loadSlavePolicy
+    ```
 
 ## Install iot-edge-sdk-for-iot-parser Output Message
 
@@ -1164,41 +1212,3 @@ SUCCESS, executable is located at ../../bdModbusGateway
 root@localhost:/home/zengjf/iot-edge-sdk-for-iot-parser/modbus/nossl#
 ```
 
-## Baidu Parser
-
-* 创建`iot-edge-sdk-for-iot-parser` key：  
-  ![img/Baidu_IoT_Parser_modbus_key.png](img/Baidu_IoT_Parser_modbus_key.png)
-* 创建网关：
-  ![img/Baidu_IoT_Parser_modbus_gateway.png](img/Baidu_IoT_Parser_modbus_gateway.png)
-* 运行`bdModbusGateway`：
-  * 创建`gwconfig.txt`文件；
-  * 将网关设备JSON密钥放入里面；
-  * 加载`gwconfig.txt`文件成功提示信息：`successfully loaded gateway config from file gwconfig.txt`；
-  ![img/Baidu_IoT_Parser_iot_edge-sdk-for-iot-parser.png](img/Baidu_IoT_Parser_iot_edge-sdk-for-iot-parser.png)
-* [Python Source Code](code/iot-edge-sdk-for-iot-parser/asynchronous-server.py)
-* 可能会遇到policyCache.txt文件的问题，需要点击gateway Web界面上的配置下发就行了；  
-  ```
-  [
-      {
-          "gatewayId":"5f69af20-79b3-44bf-84ba-3348a0155bf3",
-          "trantable":"15c3f8b0-d634-4da0-bfca-2318cbeacd17",
-          "functioncode":1,
-          "slaveId":5,
-          "pubChannel":{
-              "endpoint":"tcp://parser_endpoint1513157537065.mqtt.iot.gz.baidubce.com:1883",
-              "topic":"mb_dataTopic_v31513581732818",
-              "user":"parser_endpoint1513157537065/mb_thing_v21513157537065",
-              "password":"cLTFcng6DHjJf+DePzVAV41qKsLDtCmdz8o9Z4looTE="
-          },
-          "ip_com_addr":"23.106.155.16:5020",
-          "databits":8,
-          "stopbits":1,
-          "interval":3,
-          "mode":0,
-          "length":8,
-          "start_addr":1,
-          "parity":"N",
-          "baud":300
-      }
-  ]
-  ```
