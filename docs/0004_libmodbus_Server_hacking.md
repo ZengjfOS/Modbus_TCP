@@ -1,6 +1,6 @@
 # libmodbus Server hacking
 
-```
+```C
 /*
  * Copyright © 2008-2014 Stéphane Raimbault <stephane.raimbault@gmail.com>
  *

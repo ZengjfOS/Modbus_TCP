@@ -3,7 +3,7 @@
 libmodbus重点需要分析的地方：
 `rc = modbus_reply(ctx, query, rc, mb_mapping);`
 
-```
+```C
 /* Send a response to the received request.
    Analyses the request and constructs a response.
    If an error occurs, this function construct the response
@@ -18,6 +18,14 @@ int modbus_reply(modbus_t *ctx, const uint8_t *req,
     uint16_t address;
     uint8_t rsp[MAX_MESSAGE_LENGTH];
     int rsp_length = 0;
+    /* This structure reduces the number of params in functions and so
+     * optimizes the speed of execution (~ 37%). */
+     * typedef struct _sft {
+     *     int slave;
+     *     int function;
+     *     int t_id;
+     * } sft_t;
+     */
     sft_t sft;
 
     if (ctx == NULL) {
@@ -25,28 +33,43 @@ int modbus_reply(modbus_t *ctx, const uint8_t *req,
         return -1;
     }
 
-    offset = ctx->backend->header_length;
-    slave = req[offset - 1];
-    function = req[offset];
-    address = (req[offset + 1] << 8) + req[offset + 2];
+    offset = ctx->backend->header_length;   
+    slave = req[offset - 1];                                // modbus slave address
+    function = req[offset];                                 // function code
+    address = (req[offset + 1] << 8) + req[offset + 2];     // uint16_t data address
 
-    sft.slave = slave;
-    sft.function = function;
-    sft.t_id = ctx->backend->prepare_response_tid(req, &req_length);
+    sft.slave = slave;                                                  // slave
+    sft.function = function;                                            // function
+    sft.t_id = ctx->backend->prepare_response_tid(req, &req_length);    // transfer id
 
     /* Data are flushed on illegal number of values errors. */
+    /**
+     *  Modbus function codes 
+     * #define MODBUS_FC_READ_COILS                0x01
+     * #define MODBUS_FC_READ_DISCRETE_INPUTS      0x02
+     * #define MODBUS_FC_READ_HOLDING_REGISTERS    0x03
+     * #define MODBUS_FC_READ_INPUT_REGISTERS      0x04
+     * #define MODBUS_FC_WRITE_SINGLE_COIL         0x05
+     * #define MODBUS_FC_WRITE_SINGLE_REGISTER     0x06
+     * #define MODBUS_FC_READ_EXCEPTION_STATUS     0x07
+     * #define MODBUS_FC_WRITE_MULTIPLE_COILS      0x0F
+     * #define MODBUS_FC_WRITE_MULTIPLE_REGISTERS  0x10
+     * #define MODBUS_FC_REPORT_SLAVE_ID           0x11
+     * #define MODBUS_FC_MASK_WRITE_REGISTER       0x16
+     * #define MODBUS_FC_WRITE_AND_READ_REGISTERS  0x17
+     */
     switch (function) {
     case MODBUS_FC_READ_COILS:
     case MODBUS_FC_READ_DISCRETE_INPUTS: {
-        unsigned int is_input = (function == MODBUS_FC_READ_DISCRETE_INPUTS);
-        int start_bits = is_input ? mb_mapping->start_input_bits : mb_mapping->start_bits;
-        int nb_bits = is_input ? mb_mapping->nb_input_bits : mb_mapping->nb_bits;
-        uint8_t *tab_bits = is_input ? mb_mapping->tab_input_bits : mb_mapping->tab_bits;
-        const char * const name = is_input ? "read_input_bits" : "read_bits";
-        int nb = (req[offset + 3] << 8) + req[offset + 4];
+        unsigned int is_input = (function == MODBUS_FC_READ_DISCRETE_INPUTS);               // 判断两种类型
+        int start_bits = is_input ? mb_mapping->start_input_bits : mb_mapping->start_bits;  // 选择数据区域
+        int nb_bits = is_input ? mb_mapping->nb_input_bits : mb_mapping->nb_bits;           // 选择数据长度
+        uint8_t *tab_bits = is_input ? mb_mapping->tab_input_bits : mb_mapping->tab_bits;   // 选择对应的tab bits
+        const char * const name = is_input ? "read_input_bits" : "read_bits";               // 确定当前处理的名称
+        int nb = (req[offset + 3] << 8) + req[offset + 4];                                  // 获取要处理的数据长度
         /* The mapping can be shifted to reduce memory consumption and it
            doesn't always start at address zero. */
-        int mapping_address = address - start_bits;
+        int mapping_address = address - start_bits;                                         // 要注意这个start_bits是一个假设地址，mapping_address才是malloc出来的buffer的偏移地址。
 
         if (nb < 1 || MODBUS_MAX_READ_BITS < nb) {
             rsp_length = response_exception(
@@ -305,5 +328,36 @@ int modbus_reply(modbus_t *ctx, const uint8_t *req,
     /* Suppress any responses when the request was a broadcast */
     return (ctx->backend->backend_type == _MODBUS_BACKEND_TYPE_RTU &&
             slave == MODBUS_BROADCAST_ADDRESS) ? 0 : send_msg(ctx, rsp, rsp_length);
+}
+
+/* Build the exception response */
+static int response_exception(modbus_t *ctx, sft_t *sft,
+                              int exception_code, uint8_t *rsp,
+                              unsigned int to_flush,
+                              const char* template, ...)
+{
+    int rsp_length;
+
+    /* Print debug message */
+    if (ctx->debug) {
+        va_list ap;
+
+        va_start(ap, template);
+        vfprintf(stderr, template, ap);
+        va_end(ap);
+    }
+
+    /* Flush if required */
+    if (to_flush) {
+        _sleep_response_timeout(ctx);
+        modbus_flush(ctx);
+    }
+
+    /* Build exception response */
+    sft->function = sft->function + 0x80;
+    rsp_length = ctx->backend->build_response_basis(sft, rsp);
+    rsp[rsp_length++] = exception_code;
+
+    return rsp_length;
 }
 ```
