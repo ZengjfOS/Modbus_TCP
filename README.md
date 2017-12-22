@@ -2,6 +2,7 @@
 
 ## Docs
 
+* [docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md](docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md)
 * [docs/0006_libmodbus_modbus_reply_hacking.md](docs/0006_libmodbus_modbus_reply_hacking.md)
 * [docs/0005_libmodbus_modbus_mapping_new_start_address_hacking.md](docs/0005_libmodbus_modbus_mapping_new_start_address_hacking.md)
 * [docs/0004_libmodbus_Server_hacking.md](docs/0004_libmodbus_Server_hacking.md)
