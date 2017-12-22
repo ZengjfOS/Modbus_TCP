@@ -83,8 +83,65 @@ int modbus_reply(modbus_t *ctx, const uint8_t *req,
                 "Illegal data address 0x%0X in %s\n",
                 mapping_address < 0 ? address : address + nb, name);
         } else {
+            /**
+             * /* Builds a TCP response header */
+             * static int _modbus_tcp_build_response_basis(sft_t *sft, uint8_t *rsp)
+             * {
+             *     /* Extract from MODBUS Messaging on TCP/IP Implementation
+             *        Guide V1.0b (page 23/46):
+             *        The transaction identifier is used to associate the future
+             *        response with the request. */
+             *     rsp[0] = sft->t_id >> 8;
+             *     rsp[1] = sft->t_id & 0x00ff;
+             * 
+             *     /* Protocol Modbus */
+             *     rsp[2] = 0;
+             *     rsp[3] = 0;
+             * 
+             *     /* Length will be set later by send_msg (4 and 5) */
+             * 
+             *     /* The slave ID is copied from the indication */
+             *     rsp[6] = sft->slave;
+             *     rsp[7] = sft->function;
+             * 
+             *     return _MODBUS_TCP_PRESET_RSP_LENGTH;
+             * }
+             *
+             * #define _MODBUS_TCP_PRESET_RSP_LENGTH  8
+             */
             rsp_length = ctx->backend->build_response_basis(&sft, rsp);
             rsp[rsp_length++] = (nb / 8) + ((nb % 8) ? 1 : 0);
+            /**
+             * static int response_io_status(uint8_t *tab_io_status,
+             *                  int address, int nb,
+             *                  uint8_t *rsp, int offset)
+             * {
+             *     int shift = 0;
+             *     /* Instead of byte (not allowed in Win32) */
+             *     int one_byte = 0;
+             *     int i;
+             * 
+             *     // 将uint8_t换成bit返回，这里要注意的存储的是uint8_t，发送的时候进行转换
+             *     for (i = address; i < address + nb; i++) {
+             *         one_byte |= tab_io_status[i] << shift;
+             *         if (shift == 7) {
+             *             /* Byte is full */
+             *             rsp[offset++] = one_byte;
+             *             one_byte = shift = 0;
+             *         } else {
+             *             shift++;
+             *         }
+             *     }
+             * 
+             *     if (shift != 0)
+             *         rsp[offset++] = one_byte;
+             * 
+             *     return offset;
+             * }
+             *
+             * 01 56 00 00 00 06 01 01 00 00 00 05
+             * 01 56 00 00 00 04 01 01 01 1F
+             */
             rsp_length = response_io_status(tab_bits, mapping_address, nb,
                                             rsp, rsp_length);
         }
