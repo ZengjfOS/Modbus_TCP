@@ -1,5 +1,8 @@
 # Modbus TCP
 
+* [Baidu modbus gateway](https://github.com/baidu/iot-edge-sdk-for-iot-parser/tree/master/modbus)
+* [stephane/libmodbus](https://github.com/stephane/libmodbus)
+
 ## Docs
 
 * [docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md](docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md)
