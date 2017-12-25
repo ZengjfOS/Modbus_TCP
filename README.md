@@ -3,6 +3,11 @@
 * [Baidu modbus gateway](https://github.com/baidu/iot-edge-sdk-for-iot-parser/tree/master/modbus)
 * [stephane/libmodbus](https://github.com/stephane/libmodbus)
 
+# 百度STM32 IoT
+
+* [B-L475E-IOT01A](http://www.st.com/zh/evaluation-tools/b-l475e-iot01a.html)
+* [baidu/iot-edge-sdk-samples](https://github.com/baidu/iot-edge-sdk-samples/tree/master/STM32/B-L475E-IOT01)
+
 ## Docs
 
 * [docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md](docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md)
