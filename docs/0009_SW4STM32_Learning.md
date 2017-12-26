@@ -6,7 +6,7 @@
 
 ## 原理图
 
-[refers/IOT_STuino_v2.1.pdf](refers/IOT_STuino_v2.1.pdf)
+GOKIT3原理图： [refers/IOT_STuino_v2.1.pdf](refers/IOT_STuino_v2.1.pdf)
 
 ## STM32CubeMX Setting
 
