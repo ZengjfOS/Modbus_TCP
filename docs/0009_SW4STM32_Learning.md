@@ -14,7 +14,7 @@
   ![img/STM32CubeMX_STM32F103C8Tx_Pinout_config.png](img/STM32CubeMX_STM32F103C8Tx_Pinout_config.png)  
 * 时钟配置：  
   ![img/STM32CubeMX_STM32F103C8Tx_Clock_config.png](img/STM32CubeMX_STM32F103C8Tx_Clock_config.png)  
-* 生成项目代码配置：
+* 生成项目代码配置：  
   ![img/STM32CubeMX_STM32F103C8Tx_Project_config.png](img/STM32CubeMX_STM32F103C8Tx_Project_config.png)  
 
 接下来就是生成代码就行了。
