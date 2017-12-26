@@ -10,6 +10,9 @@
 
 ## Docs
 
+* [docs/0012_SW4STM32_B-L475E-IOT01A_Sensors_Init.md](docs/0012_SW4STM32_B-L475E-IOT01A_Sensors_Init.md)
+* [docs/0011_SW4STM32_B-L475E-IOT01A_WiFi_Settings.md](docs/0011_SW4STM32_B-L475E-IOT01A_WiFi_Settings.md)
+* [docs/0010_SW4STM32_B-L475E-IOT01A_Printf_Hacking.md](docs/0010_SW4STM32_B-L475E-IOT01A_Printf_Hacking.md)
 * [docs/0009_SW4STM32_Learning.md](docs/0009_SW4STM32_Learning.md)
 * [docs/0008_B-L475E-IOT01A_Schematic_Analysis.md](docs/0008_B-L475E-IOT01A_Schematic_Analysis.md)
 * [docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md](docs/0007_libmodbus_modbus_new_tcp_pi_hacking.md)
