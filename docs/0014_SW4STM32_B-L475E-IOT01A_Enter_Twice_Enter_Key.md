@@ -4,7 +4,7 @@
 
 ## Source Code
 
-```
+```C
 /**
  * @brief  Get a line from the console (user input).
  * @param  Out:  inputString   Pointer to buffer for input line.
