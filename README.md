@@ -3,13 +3,14 @@
 * [Baidu modbus gateway](https://github.com/baidu/iot-edge-sdk-for-iot-parser/tree/master/modbus)
 * [stephane/libmodbus](https://github.com/stephane/libmodbus)
 
-# 百度STM32 IoT
+# B-L475E-IOT01A
 
 * [B-L475E-IOT01A](http://www.st.com/zh/evaluation-tools/b-l475e-iot01a.html)
-* [baidu/iot-edge-sdk-samples](https://github.com/baidu/iot-edge-sdk-samples/tree/master/STM32/B-L475E-IOT01)
+* [baidu/iot-edge-sdk-samples](https://github.com/ZengjfOS/iot-edge-sdk-samples/tree/master/STM32/B-L475E-IOT01)
 
 ## Docs
 
+* [docs/0015_SW4STM32_B-L475E-IOT01A_MQTT_Code_Hacking.md](docs/0015_SW4STM32_B-L475E-IOT01A_MQTT_Code_Hacking.md)
 * [docs/0014_SW4STM32_B-L475E-IOT01A_Enter_Twice_Enter_Key.md](docs/0014_SW4STM32_B-L475E-IOT01A_Enter_Twice_Enter_Key.md)
 * [docs/0013_SW4STM32_B-L475E-IOT01A_Compile_Download.md](docs/0013_SW4STM32_B-L475E-IOT01A_Compile_Download.md)
 * [docs/0012_SW4STM32_B-L475E-IOT01A_Sensors_Init.md](docs/0012_SW4STM32_B-L475E-IOT01A_Sensors_Init.md)
