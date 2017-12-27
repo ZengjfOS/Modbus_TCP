@@ -10,6 +10,7 @@
 
 ## Docs
 
+* [docs/0014_SW4STM32_B-L475E-IOT01A_Enter_Twice_Enter_Key.md](docs/0014_SW4STM32_B-L475E-IOT01A_Enter_Twice_Enter_Key.md)
 * [docs/0013_SW4STM32_B-L475E-IOT01A_Compile_Download.md](docs/0013_SW4STM32_B-L475E-IOT01A_Compile_Download.md)
 * [docs/0012_SW4STM32_B-L475E-IOT01A_Sensors_Init.md](docs/0012_SW4STM32_B-L475E-IOT01A_Sensors_Init.md)
 * [docs/0011_SW4STM32_B-L475E-IOT01A_WiFi_Settings.md](docs/0011_SW4STM32_B-L475E-IOT01A_WiFi_Settings.md)
