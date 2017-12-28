@@ -10,6 +10,7 @@
 
 ## Docs
 
+* [docs/0016_SW4STM32_B-L475E-IOT01A_Gyroscope_Hacking.md](docs/0016_SW4STM32_B-L475E-IOT01A_Gyroscope_Hacking.md)
 * [docs/0015_SW4STM32_B-L475E-IOT01A_MQTT_Code_Hacking.md](docs/0015_SW4STM32_B-L475E-IOT01A_MQTT_Code_Hacking.md)
 * [docs/0014_SW4STM32_B-L475E-IOT01A_Enter_Twice_Enter_Key.md](docs/0014_SW4STM32_B-L475E-IOT01A_Enter_Twice_Enter_Key.md)
 * [docs/0013_SW4STM32_B-L475E-IOT01A_Compile_Download.md](docs/0013_SW4STM32_B-L475E-IOT01A_Compile_Download.md)

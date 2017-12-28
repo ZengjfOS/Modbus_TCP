@@ -282,22 +282,22 @@ int iothub_mqtt_client_run(void)
                 float    GYR_Value[3];
                 int16_t  MAG_Value[3];
 
-                mdl->temperature = BSP_TSENSOR_ReadTemp();
-                mdl->humidity = BSP_HSENSOR_ReadHumidity();
-                mdl->pressure = BSP_PSENSOR_ReadPressure();
-                mdl->proximity = VL53L0X_PROXIMITY_GetDistance();
+                mdl->temperature = BSP_TSENSOR_ReadTemp();              // 温度
+                mdl->humidity = BSP_HSENSOR_ReadHumidity();             // 湿度
+                mdl->pressure = BSP_PSENSOR_ReadPressure();             // 大气压力
+                mdl->proximity = VL53L0X_PROXIMITY_GetDistance();       // 激光测距
 
-                BSP_ACCELERO_AccGetXYZ(ACC_Value);
+                BSP_ACCELERO_AccGetXYZ(ACC_Value);                      // 加速度计
                 mdl->accX = ACC_Value[0];
                 mdl->accY = ACC_Value[1];
                 mdl->accZ = ACC_Value[2];
 
-                BSP_GYRO_GetXYZ(GYR_Value);
+                BSP_GYRO_GetXYZ(GYR_Value);                             // 陀螺仪
                 mdl->gyrX = GYR_Value[0];
                 mdl->gyrY = GYR_Value[1];
                 mdl->gyrZ = GYR_Value[2];
 
-                BSP_MAGNETO_GetXYZ(MAG_Value);
+                BSP_MAGNETO_GetXYZ(MAG_Value);                          // 磁力计
                 mdl->magX = MAG_Value[0];
                 mdl->magY = MAG_Value[1];
                 mdl->magZ = MAG_Value[2];
