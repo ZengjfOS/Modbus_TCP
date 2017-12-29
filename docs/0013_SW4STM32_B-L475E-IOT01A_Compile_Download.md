@@ -10,7 +10,7 @@
 Open On-Chip Debugger 0.10.0-dev-00005-g4030e1c-dirty (2017-10-24-08:00)
 Licensed under GNU GPL v2
 For bug reports, read
-	http://openocd.org/doc/doxygen/bugs.html
+    http://openocd.org/doc/doxygen/bugs.html
 srst_only separate srst_nogate srst_open_drain connect_assert_srst
 Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
 padded zone erase set to 1
@@ -26,7 +26,7 @@ Info : STM32L475VGTx.cpu: hardware has 6 breakpoints, 4 watchpoints
 Info : Stlink adapter speed set to 480 kHz
 adapter speed: 480 kHz
 STM32L475VGTx.cpu: target state: halted
-target halted due to debug-request, current mode: Thread 
+target halted due to debug-request, current mode: Thread
 xPSR: 0x01000000 pc: 0x08031534 msp: 0x20002878
 Info : Stlink adapter speed set to 4000 kHz
 adapter speed: 4000 kHz
@@ -40,20 +40,20 @@ Info : Erase the padded zone before the write
 Warn : Adding extra erase range, 0x00044800 to 0x00044f17
 Info : Padding image section 1 with 127208 bytes
 STM32L475VGTx.cpu: target state: halted
-target halted due to breakpoint, current mode: Thread 
+target halted due to breakpoint, current mode: Thread
 xPSR: 0x61000000 pc: 0x20000050 msp: 0x20002878
 Warn : block write succeeded
 wrote 411648 bytes from file Debug/B-L475E-IOT01.elf in 11.588074s (34.691 KiB/s)
 ** Programming Finished **
 ** Verify Started **
 STM32L475VGTx.cpu: target state: halted
-target halted due to breakpoint, current mode: Thread 
+target halted due to breakpoint, current mode: Thread
 xPSR: 0x61000000 pc: 0x2000002e msp: 0x20002878
 STM32L475VGTx.cpu: target state: halted
-target halted due to breakpoint, current mode: Thread 
+target halted due to breakpoint, current mode: Thread
 xPSR: 0x61000000 pc: 0x2000002e msp: 0x20002878
 STM32L475VGTx.cpu: target state: halted
-target halted due to breakpoint, current mode: Thread 
+target halted due to breakpoint, current mode: Thread
 xPSR: 0x61000000 pc: 0x2000002e msp: 0x20002878
 verified 282440 bytes in 8.123989s (33.951 KiB/s)
 ** Verified OK **
