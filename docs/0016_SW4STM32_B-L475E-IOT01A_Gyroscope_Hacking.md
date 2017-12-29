@@ -125,7 +125,7 @@ uint8_t BSP_GYRO_Init(void)
 
 ## Gyroscope GetXYZ
 
-```
+```C
 void BSP_GYRO_GetXYZ(float* pfData)
 {
   if(GyroscopeDrv != NULL)
