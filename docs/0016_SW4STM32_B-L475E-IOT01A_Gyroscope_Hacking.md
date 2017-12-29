@@ -6,19 +6,19 @@
 
 /**
  * typedef struct
- * {  
+ * {
  *   void       (*Init)(uint16_t);
- *   void       (*DeInit)(void); 
+ *   void       (*DeInit)(void);
  *   uint8_t    (*ReadID)(void);
  *   void       (*Reset)(void);
- *   void       (*LowPower)(uint16_t);   
- *   void       (*ConfigIT)(uint16_t); 
+ *   void       (*LowPower)(uint16_t);
+ *   void       (*ConfigIT)(uint16_t);
  *   void       (*EnableIT)(uint8_t);
- *   void       (*DisableIT)(uint8_t);  
- *   uint8_t    (*ITStatus)(uint16_t, uint16_t);   
- *   void       (*ClearIT)(uint16_t, uint16_t); 
- *   void       (*FilterConfig)(uint8_t);  
- *   void       (*FilterCmd)(uint8_t);  
+ *   void       (*DisableIT)(uint8_t);
+ *   uint8_t    (*ITStatus)(uint16_t, uint16_t);
+ *   void       (*ClearIT)(uint16_t, uint16_t);
+ *   void       (*FilterConfig)(uint8_t);
+ *   void       (*FilterCmd)(uint8_t);
  *   void       (*GetXYZ)(float *);
  * }GYRO_DrvTypeDef;
  */
@@ -29,7 +29,7 @@ static GYRO_DrvTypeDef *GyroscopeDrv;
   * @retval GYRO_OK or GYRO_ERROR
   */
 uint8_t BSP_GYRO_Init(void)
-{  
+{
   uint8_t ret = GYRO_ERROR;
   uint16_t ctrl = 0x0000;
   /**
@@ -91,34 +91,34 @@ uint8_t BSP_GYRO_Init(void)
     /* Initialize component */
     /**
      * void LSM6DSL_GyroInit(uint16_t InitStruct)
-     * {  
+     * {
      *   uint8_t ctrl = 0x00;
      *   uint8_t tmp;
-     * 
+     *
      *   /* Read CTRL2_G */
      *   tmp = SENSOR_IO_Read(LSM6DSL_ACC_GYRO_I2C_ADDRESS_LOW, LSM6DSL_ACC_GYRO_CTRL2_G);
-     * 
+     *
      *   /* Write value to GYRO MEMS CTRL2_G register: FS and Data Rate */
      *   ctrl = (uint8_t) InitStruct;
      *   tmp &= ~(0xFC);
      *   tmp |= ctrl;
      *   SENSOR_IO_Write(LSM6DSL_ACC_GYRO_I2C_ADDRESS_LOW, LSM6DSL_ACC_GYRO_CTRL2_G, tmp);
-     * 
+     *
      *   /* Read CTRL3_C */
      *   tmp = SENSOR_IO_Read(LSM6DSL_ACC_GYRO_I2C_ADDRESS_LOW, LSM6DSL_ACC_GYRO_CTRL3_C);
-     * 
+     *
      *   /* Write value to GYRO MEMS CTRL3_C register: BDU and Auto-increment */
      *   ctrl = ((uint8_t) (InitStruct >> 8));
      *   tmp &= ~(0x44);
-     *   tmp |= ctrl; 
+     *   tmp |= ctrl;
      *   SENSOR_IO_Write(LSM6DSL_ACC_GYRO_I2C_ADDRESS_LOW, LSM6DSL_ACC_GYRO_CTRL3_C, tmp);
      * }
      */
     GyroscopeDrv->Init(ctrl);
-    
+
     ret = GYRO_OK;
   }
-  
+
   return ret;
 }
 ```
@@ -144,18 +144,18 @@ void LSM6DSL_GyroReadXYZAngRate(float *pfData)
   uint8_t buffer[6];
   uint8_t i = 0;
   float sensitivity = 0;
-  
+
   /* Read the gyro control register content */
   ctrlg = SENSOR_IO_Read(LSM6DSL_ACC_GYRO_I2C_ADDRESS_LOW, LSM6DSL_ACC_GYRO_CTRL2_G);
-  
+
   /* Read output register X, Y & Z acceleration */
   SENSOR_IO_ReadMultiple(LSM6DSL_ACC_GYRO_I2C_ADDRESS_LOW, LSM6DSL_ACC_GYRO_OUTX_L_G, buffer, 6);
-  
+
   for(i=0; i<3; i++)
   {
     pnRawData[i]=((((uint16_t)buffer[2*i+1]) << 8) + (uint16_t)buffer[2*i]);
   }
-  
+
   /* Normal mode */
   /* Switch the sensitivity value set in the CRTL2_G */
   switch(ctrlg & 0x0C)
@@ -170,11 +170,11 @@ void LSM6DSL_GyroReadXYZAngRate(float *pfData)
     sensitivity = LSM6DSL_GYRO_SENSITIVITY_1000DPS;
     break;
   case LSM6DSL_GYRO_FS_2000:
-    // #define LSM6DSL_GYRO_SENSITIVITY_2000DPS ((float)70.00f) /**< Sensitivity value for 2000 dps full scale [mdps/LSB] */ 
+    // #define LSM6DSL_GYRO_SENSITIVITY_2000DPS ((float)70.00f) /**< Sensitivity value for 2000 dps full scale [mdps/LSB] */
     sensitivity = LSM6DSL_GYRO_SENSITIVITY_2000DPS;
-    break;    
+    break;
   }
-  
+
   /* Obtain the mg value for the three axis */
   for(i=0; i<3; i++)
   {

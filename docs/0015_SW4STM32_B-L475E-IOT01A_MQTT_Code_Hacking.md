@@ -38,7 +38,7 @@ int iothub_mqtt_client_run(void)
          * 2. At least once: Qos = 1;
          * 3. Exactly once: QoS = 2;
          */
-        options.qualityOfServiceValue = DELIVER_AT_MOST_ONCE;           
+        options.qualityOfServiceValue = DELIVER_AT_MOST_ONCE;
 
         // #define ENDPOINT "zengjf.mqtt.iot.gz.baidubce.com"
         const char *endpoint = ENDPOINT;
@@ -74,7 +74,7 @@ int iothub_mqtt_client_run(void)
          *     int result = 0;
          *     tickcounter_ms_t currentTime, lastSendTime;
          *     tickcounter_get_current_ms(iotHubClient->msgTickCounter, &lastSendTime);
-         * 
+         *
          *     do
          *     {
          *         iothub_mqtt_dowork(iotHubClient);
@@ -83,14 +83,14 @@ int iothub_mqtt_client_run(void)
          *     } while (iotHubClient->mqttClientStatus != MQTT_CLIENT_STATUS_CONNECTED
          *              && iotHubClient->isRecoverableError
          *              && (currentTime - lastSendTime) / 1000 <= timeout);
-         * 
+         *
          *     if ((currentTime - lastSendTime) / 1000 > timeout)
          *     {
          *         LogError("failed to waitfor connection complete in %d seconds", timeout);
          *         result = __FAILURE__;
          *         return result;
          *     }
-         * 
+         *
          *     if (iotHubClient->mqttClientStatus == MQTT_CLIENT_STATUS_CONNECTED)
          *     {
          *         result = 0;
@@ -99,7 +99,7 @@ int iothub_mqtt_client_run(void)
          *     {
          *         result = __FAILURE__;
          *     }
-         * 
+         *
          *     return result;
          * }
          */
@@ -111,13 +111,13 @@ int iothub_mqtt_client_run(void)
             return __FAILURE__;
         }
 
-        /** 
+        /**
          * typedef struct SUBSCRIBE_PAYLOAD_TAG
          * {
          *     const char* subscribeTopic;
          *     QOS_VALUE qosReturn;
          * } SUBSCRIBE_PAYLOAD;
-         * 
+         *
          * 1. At most once: QoS = 0;
          * 2. At least once: Qos = 1;
          * 3. Exactly once: QoS = 2;
@@ -131,9 +131,9 @@ int iothub_mqtt_client_run(void)
         /**
          * int subscribe_mqtt_topics(IOTHUB_MQTT_CLIENT_HANDLE iotHubClient, SUBSCRIBE_PAYLOAD *subPayloads, size_t subSize)
          * {
-         * 
+         *
          *     int result = 0;
-         * 
+         *
          *     if (subPayloads == NULL || subSize == 0) {
          *         result = __FAILURE__;
          *         LogError("Failure: maybe subPayload is invalid, or subSize is zero.");
@@ -157,7 +157,7 @@ int iothub_mqtt_client_run(void)
          *             result = __FAILURE__;
          *         }
          *     }
-         * 
+         *
          *     return result;
          * }
          * 由上面的代码可知，目前不支持DELIVER_EXACTLY_ONCE功能
@@ -174,13 +174,13 @@ int iothub_mqtt_client_run(void)
          * int pub_least_ack_process(MQTT_PUB_STATUS_TYPE status, void* context)
          * {
          *     IOTHUB_MQTT_CLIENT_HANDLE clientHandle = (IOTHUB_MQTT_CLIENT_HANDLE)context;
-         * 
+         *
          *     printf("call publish at least once handle\r\n");
          *     if (clientHandle->mqttClientStatus == MQTT_CLIENT_STATUS_CONNECTED)
          *     {
          *         printf("hub is connected\r\n");
          *     }
-         * 
+         *
          *     if (status == MQTT_PUB_SUCCESS)
          *     {
          *         printf("received publish ack from mqtt server when deliver at least once message\r\n");
@@ -189,7 +189,7 @@ int iothub_mqtt_client_run(void)
          *     {
          *         printf("fail to publish message to mqtt server\r\n");
          *     }
-         * 
+         *
          *     return 0;
          * }
          */
@@ -204,12 +204,12 @@ int iothub_mqtt_client_run(void)
         /**
          * #define CREATE_MODEL_INSTANCE(schemaNamespace, ...) \
          *     IF(DIV2(COUNT_ARG(__VA_ARGS__)), CREATE_DEVICE_WITH_INCLUDE_PROPERTY_PATH, CREATE_DEVICE_WITHOUT_INCLUDE_PROPERTY_PATH) (schemaNamespace, __VA_ARGS__)
-         * 
+         *
          * 注意下面的C2是后面的宏合成的函数，跟代码的无法直接定位的
          * #define IF(condition, trueBranch, falseBranch) C2(IF,ISZERO(condition))(trueBranch, falseBranch)
-         * 
+         *
          * BEGIN_NAMESPACE(BaiduIotMqttThing);
-         * 
+         *
          * DECLARE_MODEL(BaiduSerializableIotMqttDev_t,
          *     WITH_DATA(float, temperature),
          *     WITH_DATA(float, humidity),
@@ -225,9 +225,9 @@ int iothub_mqtt_client_run(void)
          *     WITH_DATA(int, magY),
          *     WITH_DATA(int, magZ)
          *   );
-         * 
+         *
          * END_NAMESPACE(BaiduIotMqttThing);
-         * 
+         *
          * #define DECLARE_MODEL(name, ...)                                                             \
          *     REFLECTED_MODEL(name)                                                                    \
          *     FOR_EACH_1(CREATE_DESIRED_PROPERTY_CALLBACK, __VA_ARGS__)                                \
@@ -305,17 +305,17 @@ int iothub_mqtt_client_run(void)
 
                 /**
                  * #define SERIALIZE(destination, destinationSize,...) CodeFirst_SendAsync(destination, destinationSize, COUNT_ARG(__VA_ARGS__) FOR_EACH_1(ADDRESS_MACRO, __VA_ARGS__))
-                 * 
+                 *
                  * 序列化JSON数据
                  */
                 if (SERIALIZE(&destination, &destinationSize, *mdl) == CODEFIRST_OK)
                 {
                     // 发送数据，并且要求由ACK
-                	result = publish_mqtt_message(clientHandle, TOPIC_NAME_A, DELIVER_AT_LEAST_ONCE, (const uint8_t*)destination,
-                			destinationSize, pub_least_ack_process , clientHandle);
+                    result = publish_mqtt_message(clientHandle, TOPIC_NAME_A, DELIVER_AT_LEAST_ONCE, (const uint8_t*)destination,
+                            destinationSize, pub_least_ack_process , clientHandle);
 
-                	// release memory for serialized data
-                	free(destination);
+                    // release memory for serialized data
+                    free(destination);
                 }
 
                 lastSendTime = currentTime;
