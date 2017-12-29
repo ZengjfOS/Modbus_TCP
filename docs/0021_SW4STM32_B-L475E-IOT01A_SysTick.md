@@ -4,13 +4,13 @@
 
 ```C
 int main(void)
-{ 
+{
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
-  ...
-}
-
-HAL_StatusTypeDef HAL_Init(void)
+  HAL_Init();                 ---------------+
+  ...                                        |
+}                                            |
+                                             |
+HAL_StatusTypeDef HAL_Init(void)   <---------+
 {
   /* Configure Flash prefetch, Instruction cache, Data cache */
   /* Default configuration at reset is:                      */
@@ -33,35 +33,35 @@ HAL_StatusTypeDef HAL_Init(void)
   HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* Use SysTick as time base source and configure 1ms tick (default clock after Reset is MSI) */
-  HAL_InitTick(TICK_INT_PRIORITY);
-
-  /* Init the low level hardware */
-  HAL_MspInit();
-
-  /* Return function status */
-  return HAL_OK;
-}
-
+  HAL_InitTick(TICK_INT_PRIORITY);    --------------+
+                                                    |
+  /* Init the low level hardware */                 |
+  HAL_MspInit();                                    |
+                                                    |
+  /* Return function status */                      |
+  return HAL_OK;                                    |
+}                                                   |
+                                v-------------------+
 __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
 {
   /*Configure the SysTick to have interrupt in 1ms time basis*/
-  HAL_SYSTICK_Config(SystemCoreClock/1000);
-
-  /*Configure the SysTick IRQ priority */
-  HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority ,0);
-
-  /* Return function status */
-  return HAL_OK;
-}
-
-uint32_t SystemCoreClock = 4000000;
-
-uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)
+  HAL_SYSTICK_Config(SystemCoreClock/1000);    --------------------+
+                                                                   |
+  /*Configure the SysTick IRQ priority */                          |
+  HAL_NVIC_SetPriority(SysTick_IRQn, TickPriority ,0);             |
+                                                                   |
+  /* Return function status */                                     |
+  return HAL_OK;                                                   |
+}                                                                  |
+                                                                   |
+uint32_t SystemCoreClock = 4000000;         <----------------------+
+                                                                   |
+uint32_t HAL_SYSTICK_Config(uint32_t TicksNumb)     <--------------+
 {
-   return SysTick_Config(TicksNumb);
-}
-
-__STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
+   return SysTick_Config(TicksNumb);        -----------------------+
+}                                                                  |
+                                                                   |
+__STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)  <---------+
 {
   if ((ticks - 1UL) > SysTick_LOAD_RELOAD_Msk)
   {
@@ -83,34 +83,34 @@ __STATIC_INLINE uint32_t SysTick_Config(uint32_t ticks)
 ```C
 g_pfnVectors:
     ...
-	.word	SysTick_Handler
-    ...
-
-void SysTick_Handler(void)
+    .word    SysTick_Handler     ---------+
+    ...                                   |
+                                          |
+void SysTick_Handler(void)       <--------+
 {
-  HAL_IncTick();
-  HAL_SYSTICK_IRQHandler();
-}
-
-__weak void HAL_IncTick(void)
-{
-  uwTick++;
-}
-
-void HAL_SYSTICK_IRQHandler(void)
-{
-  HAL_SYSTICK_Callback();
-}
-
-__weak void HAL_SYSTICK_Callback(void)
-{
-  /* NOTE : This function should not be modified, when the callback is needed,
-            the HAL_SYSTICK_Callback could be implemented in the user file
-   */
-}
-
-__weak uint32_t HAL_GetTick(void)
-{
-  return uwTick;
+  HAL_IncTick();                 ---------+
+  HAL_SYSTICK_IRQHandler();      ---------*-+
+}                                         | |
+                                          | |
+__weak void HAL_IncTick(void)    <--------+ |
+{                                           |
+  uwTick++;                        ---------*----------------------------------------+
+}                                           |                                        |
+                                            |                                        |
+void HAL_SYSTICK_IRQHandler(void)  <--------+                                        |
+{                                                                                    |
+  HAL_SYSTICK_Callback();          --------------+                                   |
+}                                                |                                   |
+                                                 |                                   |
+__weak void HAL_SYSTICK_Callback(void)  <--------+                                   |
+{                                                                                    |
+  /* NOTE : This function should not be modified, when the callback is needed,       |
+            the HAL_SYSTICK_Callback could be implemented in the user file           |
+   */                                                                                |
+}                                                                                    |
+                                                                                     |
+__weak uint32_t HAL_GetTick(void)                                                    |
+{                                                                                    |
+  return uwTick;                  <--------------------------------------------------+
 }
 ```
