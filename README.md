@@ -2,6 +2,7 @@
 
 * [Baidu modbus gateway](https://github.com/baidu/iot-edge-sdk-for-iot-parser/tree/master/modbus)
 * [stephane/libmodbus](https://github.com/stephane/libmodbus)
+* [STM32_HAL_FREEMODBUS_RTU](https://github.com/eziya/STM32_HAL_FREEMODBUS_RTU)
 
 # B-L475E-IOT01A
 
