@@ -21,56 +21,56 @@ int
 main( int argc, char *argv[] )
 {
     ...
-    if( eMBTCPInit( MB_TCP_PORT_USE_DEFAULT ) != MB_ENOERR )
-    {
-        fprintf( stderr, "%s: can't initialize modbus stack!\r\n", PROG );
-        iExitCode = EXIT_FAILURE;
-    }
-    ...
-}
-
-eMBErrorCode
-eMBTCPInit( USHORT ucTCPPort )
+    if( eMBTCPInit( MB_TCP_PORT_USE_DEFAULT ) != MB_ENOERR )           -----------------+
+    {                                                                                   |
+        fprintf( stderr, "%s: can't initialize modbus stack!\r\n", PROG );              |
+        iExitCode = EXIT_FAILURE;                                                       |
+    }                                                                                   |
+    ...                                                                                 |
+}                                                                                       |
+                                                                                        |
+eMBErrorCode                                                                            |
+eMBTCPInit( USHORT ucTCPPort )         <------------------------------------------------+
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    if( ( eStatus = eMBTCPDoInit( ucTCPPort ) ) != MB_ENOERR )
-    {
-        eMBState = STATE_DISABLED;
-    }
-    ...
-}
-
-eMBErrorCode
-eMBTCPDoInit( USHORT ucTCPPort )
+    if( ( eStatus = eMBTCPDoInit( ucTCPPort ) ) != MB_ENOERR )      ------------+
+    {                                                                           |
+        eMBState = STATE_DISABLED;                                              |
+    }                                                                           |
+    ...                                                                         |
+}                                                                               |
+                                                                                |
+eMBErrorCode                                                                    |
+eMBTCPDoInit( USHORT ucTCPPort )         <--------------------------------------+
 {
     eMBErrorCode    eStatus = MB_ENOERR;
 
-    if( xMBTCPPortInit( ucTCPPort ) == FALSE )
-    {
-        eStatus = MB_EPORTERR;
-    }
-    return eStatus;
-}
-
-BOOL
-xMBTCPPortInit( USHORT usTCPPort )
+    if( xMBTCPPortInit( ucTCPPort ) == FALSE )       ------------+
+    {                                                            |
+        eStatus = MB_EPORTERR;                                   |
+    }                                                            |
+    return eStatus;                                              |
+}                                                                |
+                                                                 |
+BOOL                                                             |
+xMBTCPPortInit( USHORT usTCPPort )          <--------------------+
 {
     USHORT          usPort;
     struct sockaddr_in serveraddr;
 
     if( usTCPPort == 0 )
     {
-        usPort = MB_TCP_DEFAULT_PORT;
-    }
-    else
-    {
-        usPort = ( USHORT ) usTCPPort;
-    }
-    ...
-}
-
-#define MB_TCP_DEFAULT_PORT 502 /* TCP listening port. */
+        usPort = MB_TCP_DEFAULT_PORT;       ------------------------------+
+    }                                                                     |
+    else                                                                  |
+    {                                                                     |
+        usPort = ( USHORT ) usTCPPort;                                    |
+    }                                                                     |
+    ...                                                                   |
+}                                                                         |
+                                                                          |
+#define MB_TCP_DEFAULT_PORT 502 /* TCP listening port. */      <----------+
 ```
 
 ## TCP Poll
@@ -81,40 +81,40 @@ main( int argc, char *argv[] )
 {
     ...
     case  'e' :
-        if( bCreatePollingThread(  ) != TRUE )
-        {
-            printf(  "Can't start protocol stack! Already running?\r\n"  );
-        }
-        break;
-    ...
-}
-
-BOOL
-bCreatePollingThread( void )
+        if( bCreatePollingThread(  ) != TRUE )                 ---------------------------+
+        {                                                                                 |
+            printf(  "Can't start protocol stack! Already running?\r\n"  );               |
+        }                                                                                 |
+        break;                                                                            |
+    ...                                                                                   |
+}                                                                                         |
+                                                                                          |
+BOOL                                                                                      |
+bCreatePollingThread( void )           <--------------------------------------------------+
 {
     BOOL            bResult;
         pthread_t       xThread;
     if( eGetPollingThreadState(  ) == STOPPED )
     {
         if( pthread_create( &xThread, NULL, pvPollingThread, NULL ) != 0 )
-        {
-            /* Can't create the polling thread. */
-            bResult = FALSE;
-        }
-        else
-        {
-            bResult = TRUE;
-        }
-    }
-    else
-    {
-        bResult = FALSE;
-    }
-
-    return bResult;
-}
-
-void* pvPollingThread( void *pvParameter )
+        {                                             |
+            /* Can't create the polling thread. */    |
+            bResult = FALSE;                          |
+        }                                             |
+        else                                          |
+        {                                             |
+            bResult = TRUE;                           |
+        }                                             |
+    }                                                 |
+    else                                              |
+    {                                                 |
+        bResult = FALSE;                              |
+    }                                                 |
+                                                      |
+    return bResult;                                   |
+}                                                     |
+                                                      |
+void* pvPollingThread( void *pvParameter )    <-------+
 {
     eSetPollingThreadState( RUNNING );
 
@@ -125,7 +125,7 @@ void* pvPollingThread( void *pvParameter )
             if( eMBPoll(  ) != MB_ENOERR )
                 break;
         }
-        while( eGetPollingThreadState(  ) != SHUTDOWN );
+        while( eGetPollingThreadState(  ) != SHUTDOWN );          <----------注意这里
     }
 
     ( void )eMBDisable(  );
@@ -137,6 +137,8 @@ void* pvPollingThread( void *pvParameter )
 ```
 
 ## Data Parser
+
+四个处理函数。
 
 ```C
 eMBErrorCode
