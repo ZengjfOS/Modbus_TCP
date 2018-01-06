@@ -2,7 +2,7 @@
 
 ## cat gwconfig.txt
 
-```
+```JSON
 {
 "endpoint":"tcp://parser_endpoint1513157537065.mqtt.iot.gz.baidubce.com:1883",
 "topic":"mb_commandTopic_v21513157537065",
@@ -14,7 +14,7 @@
 
 ## cat policyCache.txt：
 
-```
+```JSON
 [
     {
         "gatewayId":"5f69af20-79b3-44bf-84ba-3348a0155bf3",
@@ -42,7 +42,7 @@
 
 ## iot-edge-sdk-for-iot-parser Code Hacking
 
-```
+```C
 int main(int argc, char* argv[])
 {
     init_and_start();   -----------+
