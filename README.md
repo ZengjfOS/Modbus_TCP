@@ -11,6 +11,7 @@
 
 ## Docs
 
+* [iot-edge-sdk-for-iot-parser port for Buildroot](https://github.com/ZengjfOS/Buildroot/blob/master/docs/0005_iot-edge-sdk-for-iot-parser_porting.md)
 * [docs/0024_iot-edge-sdk-for-iot-parser_ringbuffer.md](docs/0024_iot-edge-sdk-for-iot-parser_ringbuffer.md)
 * [docs/0023_iot-edge-sdk-for-iot-parser_Config.md](docs/0023_iot-edge-sdk-for-iot-parser_Config.md)
 * [docs/0022_FreeModbus_Demo_LINUXTCP_Function_Hacking.md](docs/0022_FreeModbus_Demo_LINUXTCP_Function_Hacking.md)
