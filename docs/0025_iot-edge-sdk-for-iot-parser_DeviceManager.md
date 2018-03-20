@@ -6,11 +6,11 @@
 
 ## 操作步骤
 
-* cd iot-edge-c-sdk 
-* mkdir cmake 
-* cd cmake 
-* cmake .. 
-* cmake --build . 
+* `cd iot-edge-c-sdk`
+* `mkdir cmake`
+* `cd cmake`
+* `cmake ..`
+* `cmake --build .`
 
 ## Example Source Code
 
